@@ -71,6 +71,9 @@ void * do_processing(void* arg)
     sleep(sleep_time);
     printf("\nFile grabbed: %s It took: %i seconds.\n", arg, sleep_time);
     
+    // Because threads "share" their data, we want to lock the following
+    // code out from other threads. This is done using mutexes (mutexi? :D).
+    // Otherwise, race conditions could happend.
     pthread_mutex_init(&lock, NULL); // Using our mutex to lock code.
     total_files++;
     total_time += sleep_time;
