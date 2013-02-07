@@ -4,9 +4,8 @@
  *
  * Date: 2013-02-07
  *
- * Authors: Jason Tierney
+ * Author: Jason Tierney
  */
-
 #include <pthread.h>
 #include <stdio.h>
 #include <errno.h>
@@ -18,7 +17,6 @@ void * do_processing(void * arg);
 void sig_handler(int);
 
 char text[20];
-
 float avg_time = 0;
 int total_files = 0;
 int total_time = 0;
@@ -42,18 +40,21 @@ int main()
             if((status = pthread_create(&thread1, NULL, do_processing, text)) != 0)
             {
                 fprintf(stderr, "thread create error %d: %s\n", status, strerror(status));
-		exit(1);
+		        exit(1);
             }
         }
     }
 
-    sleep(3);
+    sleep(3); // WTF is this doing here?
     return 0;
 }
 
 /**
  * Handles file processing.
  * Each thread will use this.
+ * Simulates: 
+ *   - 20% chance file will take 7-10 seconds to load.
+ *   - 80% change file will take 1 second to load.
  */
 void * do_processing(void* arg)
 {
