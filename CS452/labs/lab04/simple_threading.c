@@ -15,6 +15,7 @@
 
 void * do_processing(void * arg);
 void sig_handler(int);
+unsigned int sleep(unsigned int);
 
 char text[20];
 float avg_time = 0;
@@ -45,7 +46,6 @@ int main()
         }
     }
 
-    sleep(3); // WTF is this doing here?
     return 0;
 }
 
@@ -70,7 +70,7 @@ void * do_processing(void* arg)
     }
 
     sleep(sleep_time);
-    printf("\nFile grabbed: %s It took: %i seconds.\n", arg, sleep_time);
+    printf("\nFile grabbed: %sIt took: %i seconds.\n", (char*) arg, sleep_time);
     
     // Because threads "share" their data, we want to lock the following
     // code out from other threads. This is done using mutexes (mutexi? :D).
@@ -91,7 +91,7 @@ void sig_handler(int signum)
     printf("\nPeace out, brah!");
     printf("\nTotal files: %i", total_files);
     avg_time = (float)total_time / (float)total_files;
-    printf("\nAverage time: %.2f second(s)\n", avg_time);i
+    printf("\nAverage time: %.2f second(s)\n", avg_time);
 
     // Exit gracefully.
     exit(0);
