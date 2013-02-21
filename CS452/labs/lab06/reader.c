@@ -14,13 +14,13 @@
 #include <sys/ipc.h>
 #include <sys/shm.h>
 
-#define size 4096
+#define FOO 4096
 
 // A struct that defines our shared memory space.
 struct SharedMem
 {
 	int isWriter;
-	char text[size];
+	char text[FOO];
 };
 
 /**
@@ -33,7 +33,6 @@ int main()
 	struct SharedMem * sharedMemory;
 	int shmid;
 	int key = getuid();
-	srand((unsigned int) getpid());
 	shmid = shmget((key_t)key, sizeof(struct SharedMem), 0666 | IPC_CREAT);
 	if(shmid == 1)
 	{
